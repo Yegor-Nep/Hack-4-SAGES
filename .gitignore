@@ -1,3 +1,6 @@
 backend/test.cpp
 backend/a.out
+backend/build
+backend/build/*
+backend/build/
 
