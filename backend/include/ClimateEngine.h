@@ -62,7 +62,7 @@ class Calculator {
 
 	public:
     double heat_in(Planet &planet, Star &star, const double angle_degrees) const {
-        return (star.get_stellar_flux() / M_PI) * (1.0 - planet.get_albedo()) * std::max(0.0, std::sin(radians(angle_degrees)));
+        return (star.get_stellar_flux()) * (1.0 - planet.get_albedo()) * std::max(0.0, std::cos(radians(angle_degrees)));
     }
 
 	public:
@@ -95,7 +95,7 @@ class ClimateEngine {
     std::vector<double> next_temperatures;
     
 	public:
-    ClimateEngine(const size_t size = 180) {
+    ClimateEngine(const size_t size = 19) {
         this->grid_size = size;
 
         theta_angles.resize(size);
