@@ -54,6 +54,8 @@ void Planet::set_base_pressure(const double base_pressure) {
 	if (base_pressure < 0.01 or base_pressure > 100) {
 		throw InvalidPlanetSetArgument(PlanetParameter::base_pressure, base_pressure);
 	}
+
+	this->base_pressure = base_pressure;
 }
 
 double Planet::get_mass() const {
@@ -69,7 +71,7 @@ double Planet::get_radius() const {
 		throw EmptyPlanetArgument(PlanetParameter::radius);
 	}
 
-	return mass;
+	return radius;
 }
 
 double Planet::get_albedo() const {
@@ -77,7 +79,7 @@ double Planet::get_albedo() const {
 		throw EmptyPlanetArgument(PlanetParameter::albedo);
 	}
 
-	return mass;
+	return albedo;
 }
 
 double Planet::get_emissivity() const {
@@ -85,7 +87,7 @@ double Planet::get_emissivity() const {
 		throw EmptyPlanetArgument(PlanetParameter::emissivity);
 	}
 
-	return mass;
+	return emissivity;
 }
 
 double Planet::get_heat_capacity() const {
@@ -93,7 +95,7 @@ double Planet::get_heat_capacity() const {
 		throw EmptyPlanetArgument(PlanetParameter::heat_capacity);
 	}
 
-	return mass;
+	return heat_capacity;
 }
 
 double Planet::get_base_diffusion() const {
