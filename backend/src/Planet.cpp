@@ -35,7 +35,7 @@ void Planet::set_emissivity(const double emissivity) {
 }
 
 void Planet::set_heat_capacity(const double heat_capacity) {
-	if (heat_capacity < 1000000 or heat_capacity > 100000000) {
+	if (heat_capacity < 900 or heat_capacity > 100000000) {
 		throw InvalidPlanetSetArgument(PlanetParameter::heat_capacity, heat_capacity);
 	}
 
@@ -43,7 +43,7 @@ void Planet::set_heat_capacity(const double heat_capacity) {
 }
 
 void Planet::set_base_diffusion(const double base_diffusion) {
-	if (base_diffusion < 0 or base_diffusion > 10)  {
+	if (base_diffusion < 0 or base_diffusion > 1000)  {
 		throw InvalidPlanetSetArgument(PlanetParameter::base_diffusion, base_diffusion);
 	}
 
