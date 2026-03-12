@@ -7,7 +7,7 @@ sys.path.insert(1, '../graphs/')
 sys.path.insert(1, '../../facade/')
 from facade import Facade
 from params_enum import Parametrs
-from graphs import generate_graph_from_facade, generate_global_map
+from graphs import generate_graph_from_facade, generate_global_map, generate_water_map
 
 @dataclass
 class PlanetParameters:
@@ -52,7 +52,6 @@ def slider_with_input(label, min_val, max_val, default_val, key):
 
 st.set_page_config(layout="wide")
 
-# hide Streamlit interface
 hide_ui_style = """
     <style>
     #MainMenu {visibility: hidden;}
@@ -102,6 +101,7 @@ with tab_d:
             print(final_data)
             fig = generate_graph_from_facade(final_data)
             fig1 = generate_global_map(final_data)
+            fig2 = generate_water_map(final_data)
 
             # forBackend = PlanetParameters(results)
             # st.success("data processed successfully")
@@ -113,6 +113,7 @@ with tab_d:
             if fig is not None:
                 st.session_state['current_fig'] = fig
                 st.session_state['global_map_fig'] = fig1
+                st.session_state['water_map_fig'] = fig2
                 st.session_state['generated_chart'] = True
                 st.success("Wykres wygenerowany!")
             else:
@@ -127,15 +128,25 @@ with tab_d:
             st.pyplot(fig_planet)
 
 with tab_g:
-    col_l, col_r = st.columns([1,1])
-
-    with col_l:
-        st.header("wykres 1.")
-        if st.session_state['generated_chart'] is not None:
+    st.subheader("1D Temperature Gradient")
+    if st.session_state['generated_chart'] is not None:
+        col_center = st.columns([1, 2, 1])
+        with col_center[1]:
             st.pyplot(st.session_state['current_fig']) 
-        else:
-            st.info("Kliknij 'Generate' w zakładce Dashboard, aby zobaczyć wykresy.")
-    with col_r:
-        st.header("wykres 2.")
+    else:
+        st.info("Kliknij 'Generate' w zakładce Dashboard, aby zobaczyć wykresy.")
+        
+    st.write("---") 
+    
+    col_map1, col_map2 = st.columns(2)
+    
+    with col_map1:
+        st.subheader("2D Global Thermal Map")
         if st.session_state['generated_chart'] is not None:
             st.pyplot(st.session_state['global_map_fig'])
+            
+    with col_map2:
+        st.subheader("2D Surface Phase Map")
+        if st.session_state['generated_chart'] is not None:
+            st.pyplot(st.session_state['water_map_fig'])
+
