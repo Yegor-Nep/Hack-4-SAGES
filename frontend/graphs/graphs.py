@@ -1,24 +1,43 @@
 import matplotlib.pyplot as plt
 from enum import Enum
 
-from facade import facade_singleton 
-
 class ChartType(Enum):
     BAR = "bar"
     LINE = "line"
     SCATTER = "scatter"
 
-def generate_graph_from_facade():
+def generate_graph_from_facade(graph_data):
+    if not graph_data:
+        return None
 
-    graph_data = facade_singleton.get_output()
-    
+    x_values = graph_data.get('theta_angles', [])
+    y_values = graph_data.get('temperatures', [])
+    habitability = graph_data.get('habitability', 0.0)
+
+    if not x_values or not y_values:
+        return None
+
+    fig, ax = plt.subplots(figsize=(8, 5))
+
+    ax.plot(x_values, y_values, color='red', linestyle='-', linewidth=2)
+    ax.fill_between(x_values, y_values, color='red', alpha=0.1)
+
+    ax.set_title(f"Surface Temperature (Habitability: {habitability:.2f}%)")
+    ax.set_xlabel("Planetary Angle (Theta)")
+    ax.set_ylabel("Temperature (Kelvin)")
+    ax.grid(True, linestyle='--', alpha=0.5)
+
+    return fig
+
+"""
+def generate_graph_from_facade(graph_data):
     if not graph_data:
         return None
 
     chart_type = graph_data.get('type')
-    x_values = graph_data.get('x', [])
-    y_values = graph_data.get('y', [])
-    title = graph_data.get('title', 'Brak tytułu')
+    x_values = graph_data.get('theta_angles', [])
+    y_values = graph_data.get('temperatures', [])
+    title = graph_data.get('title', 'temperatura na kątach')
 
     if not x_values or not y_values:
         return None
@@ -43,6 +62,9 @@ def generate_graph_from_facade():
     ax.set_ylabel("Oś Y")
     ax.grid(True, linestyle='--', alpha=0.5)
 
+    print(fig)
+
     plt.close(fig)
 
     return fig
+"""

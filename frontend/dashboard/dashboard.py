@@ -5,7 +5,7 @@ import sys
 sys.path.insert(1, '..')
 sys.path.insert(1, '../graphs/')
 sys.path.insert(1, '../../facade/')
-from facade import facade_singleton
+from facade import Facade
 from params_enum import Parametrs
 from graphs import generate_graph_from_facade 
 
@@ -50,6 +50,8 @@ def slider_with_input(label, min_val, max_val, default_val, key):
 
     return st.session_state[f"{key}_slider"]
 
+st.set_page_config(layout="wide")
+
 # hide Streamlit interface
 hide_ui_style = """
     <style>
@@ -60,7 +62,8 @@ hide_ui_style = """
     """
 st.markdown(hide_ui_style, unsafe_allow_html=True)
 
-st.set_page_config(layout="wide")
+if 'sim' not in st.session_state:
+    st.session_state.sim = Facade()
 
 if 'generated_chart' not in st.session_state:
     st.session_state['generated_chart'] = None
@@ -94,15 +97,21 @@ with tab_d:
         st.write("---")
         fig = None 
         if st.button("Generate"):
-            forBackend = PlanetParameters(data=results)
-            st.success("data processed successfully")
+            st.session_state.sim.set_data(results)
+            final_data = st.session_state.sim.run_simulation()
+            print(final_data)
+            fig = generate_graph_from_facade(final_data)
+
+            # forBackend = PlanetParameters(results)
+            # st.success("data processed successfully")
             
-            facade_singleton.set_data(forBackend)
-            facade_singleton.run_simulation()
-            fig = generate_graph_from_facade()
+            # facade_singleton.set_data(forBackend)
+            # facade_singleton.run_simulation()
+            # fig = generate_graph_from_facade()
 
             if fig is not None:
                 st.session_state['current_fig'] = fig
+                st.session_state['generated_chart'] = True
                 st.success("Wykres wygenerowany!")
             else:
                 st.error("Fasada nie zwróciła danych do wykresu!")
