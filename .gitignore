@@ -3,4 +3,10 @@ backend/a.out
 backend/build
 backend/build/*
 backend/build/
+frontend/dashboard/venv/*
+frontend/dashboard/venv
+frontend/dashboard/venv/
+__pycache__/
+.streamlit/
+venv/
 

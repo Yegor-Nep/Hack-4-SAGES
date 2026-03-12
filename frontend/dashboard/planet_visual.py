@@ -1,17 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from enum import Enum
 
-class Parametrs(Enum):
-    mass = 1
-    radius = 2
-    albedo = 3
-    emissivity = 4
-    heat_capacity = 5
-    base_diffusion = 6
-    base_pressure = 7
-    stellar_flux = 8
-    
+import sys
+sys.path.insert(1, '..')
+from params_enum import Parametrs
+
 def get_planet_preview(radius, albedo, flux, pressure, emissivity):
     sigma_pseudo = 0.0000000567 
     

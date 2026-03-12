@@ -1,6 +1,10 @@
 import streamlit as st
 from dataclasses import dataclass
-from planet_visual import Parametrs, generate_planet_visual
+from planet_visual import generate_planet_visual
+
+import sys
+sys.path.insert(1, '..')
+from params_enum import Parametrs
 
 @dataclass
 class PlanetParameters:
