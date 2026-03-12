@@ -99,7 +99,7 @@ with tab_d:
         if st.button("Generate"):
             st.session_state.sim.set_data(results)
             final_data = st.session_state.sim.run_simulation()
-            print(final_data)
+            # print(final_data)
             fig = generate_graph_from_facade(final_data)
 
             # forBackend = PlanetParameters(results)
