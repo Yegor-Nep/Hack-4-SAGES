@@ -9,3 +9,5 @@ class Facade:
     def set_data(self, data):
         self.data = data
 
+facade_singleton = Facade()
+
