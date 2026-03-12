@@ -7,7 +7,7 @@ sys.path.insert(1, '../graphs/')
 sys.path.insert(1, '../../facade/')
 from facade import Facade
 from params_enum import Parametrs
-from graphs import generate_graph_from_facade 
+from graphs import generate_graph_from_facade, generate_global_map
 
 @dataclass
 class PlanetParameters:
@@ -101,6 +101,7 @@ with tab_d:
             final_data = st.session_state.sim.run_simulation()
             print(final_data)
             fig = generate_graph_from_facade(final_data)
+            fig1 = generate_global_map(final_data)
 
             # forBackend = PlanetParameters(results)
             # st.success("data processed successfully")
@@ -111,6 +112,7 @@ with tab_d:
 
             if fig is not None:
                 st.session_state['current_fig'] = fig
+                st.session_state['global_map_fig'] = fig1
                 st.session_state['generated_chart'] = True
                 st.success("Wykres wygenerowany!")
             else:
@@ -135,3 +137,5 @@ with tab_g:
             st.info("Kliknij 'Generate' w zakładce Dashboard, aby zobaczyć wykresy.")
     with col_r:
         st.header("wykres 2.")
+        if st.session_state['generated_chart'] is not None:
+            st.pyplot(st.session_state['global_map_fig'])
