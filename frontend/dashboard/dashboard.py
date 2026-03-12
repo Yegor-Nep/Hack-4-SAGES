@@ -90,7 +90,7 @@ with tab_d:
         with sub_col2:
             with st.container(border=True):
                 results[Parametrs.heat_capacity] = slider_with_input("heat capacity", 1000000, 100000000, 50500000, "heat_capacity")
-                results[Parametrs.base_diffusion] = slider_with_input("base diffusion", 0.0, 100.0, 50.0, "base_diffusion")
+                results[Parametrs.base_diffusion] = slider_with_input("base diffusion", 0.0, 100.0, 1.5, "base_diffusion")
                 results[Parametrs.base_pressure] = slider_with_input("base pressure", 0.01, 100.0, 50.0, "base_pressure")
                 results[Parametrs.stellar_flux] = slider_with_input("stellar flux", 100.0, 3000.0, 1550.0, "stellar_flux")
         
@@ -99,7 +99,7 @@ with tab_d:
         if st.button("Generate"):
             st.session_state.sim.set_data(results)
             final_data = st.session_state.sim.run_simulation()
-            # print(final_data)
+            print(final_data)
             fig = generate_graph_from_facade(final_data)
 
             # forBackend = PlanetParameters(results)

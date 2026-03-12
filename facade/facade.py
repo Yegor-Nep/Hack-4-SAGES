@@ -19,12 +19,12 @@ class Facade:
         self.planet.set_radius(self.data[Parametrs.radius])
         self.planet.set_albedo(self.data[Parametrs.albedo])
         self.planet.set_emissivity(self.data[Parametrs.emissivity])
-        self.planet.set_heat_capacity(self.data[Parametrs.heat_capacity])
+        self.planet.set_heat_capacity(self.data[Parametrs.heat_capacity] / 10000)
         self.planet.set_base_diffusion(self.data[Parametrs.base_diffusion])
         self.planet.set_base_pressure(self.data[Parametrs.base_pressure])
         self.star.set_stellar_flux(self.data[Parametrs.stellar_flux])
 
-        simulation = self.engine.run_simulation(self.planet, self.star, 1, 10000)
+        simulation = self.engine.run_simulation(self.planet, self.star, 10, 500000)
         
         self.output["theta_angles"] = simulation.theta_angles
         self.output["temperatures"] = simulation.temperatures
