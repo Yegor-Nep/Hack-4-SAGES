@@ -95,7 +95,7 @@ with tab_d:
         fig = None 
         if st.button("Generate"):
             forBackend = PlanetParameters(data=results)
-            # st.success("data processed successfully", generate_graph_from_facade())
+            st.success("data processed successfully")
             
             facade_singleton.set_data(forBackend)
             facade_singleton.run_simulation()
@@ -107,12 +107,6 @@ with tab_d:
             else:
                 st.error("Fasada nie zwróciła danych do wykresu!")
     
-        if fig is not None:
-            st.session_state['current_fig'] = fig
-            st.success("Wykres wygenerowany!")
-        else:
-            st.error("Fasada nie zwróciła danych do wykresu!")
-
     with col_img:
         st.subheader("Planetary Simulation")
 
