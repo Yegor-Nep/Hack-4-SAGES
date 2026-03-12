@@ -95,7 +95,7 @@ with tab_d:
         fig = None 
         if st.button("Generate"):
             forBackend = PlanetParameters(data=results)
-            st.success("data processed successfully", generate_graph_from_facade())
+            # st.success("data processed successfully", generate_graph_from_facade())
             
             facade_singleton.set_data(forBackend)
             facade_singleton.run_simulation()
