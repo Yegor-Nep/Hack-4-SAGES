@@ -1,10 +1,13 @@
 import streamlit as st
 from dataclasses import dataclass
 from planet_visual import generate_planet_visual
-
 import sys
 sys.path.insert(1, '..')
+sys.path.insert(1, '../graphs/')
+sys.path.insert(1, '../../facade/')
+from facade import facade_singleton
 from params_enum import Parametrs
+from graphs import generate_graph_from_facade 
 
 @dataclass
 class PlanetParameters:
@@ -59,6 +62,9 @@ st.markdown(hide_ui_style, unsafe_allow_html=True)
 
 st.set_page_config(layout="wide")
 
+if 'generated_chart' not in st.session_state:
+    st.session_state['generated_chart'] = None
+    
 with st.container(border=True):
     tab_d, tab_g = st.tabs(["Dashboard", "Graphs"])
 
@@ -86,10 +92,26 @@ with tab_d:
                 results[Parametrs.stellar_flux] = slider_with_input("stellar flux", 100.0, 3000.0, 1550.0, "stellar_flux")
         
         st.write("---")
-        
+        fig = None 
         if st.button("Generate"):
             forBackend = PlanetParameters(data=results)
-            st.success("data processed successfully")
+            st.success("data processed successfully", generate_graph_from_facade())
+            
+            facade_singleton.set_data(forBackend)
+            facade_singleton.run_simulation()
+            fig = generate_graph_from_facade()
+
+            if fig is not None:
+                st.session_state['current_fig'] = fig
+                st.success("Wykres wygenerowany!")
+            else:
+                st.error("Fasada nie zwróciła danych do wykresu!")
+    
+        if fig is not None:
+            st.session_state['current_fig'] = fig
+            st.success("Wykres wygenerowany!")
+        else:
+            st.error("Fasada nie zwróciła danych do wykresu!")
 
     with col_img:
         st.subheader("Planetary Simulation")
@@ -104,6 +126,9 @@ with tab_g:
 
     with col_l:
         st.header("wykres 1.")
-    
+        if st.session_state['generated_chart'] is not None:
+            st.pyplot(st.session_state['current_fig']) 
+        else:
+            st.info("Kliknij 'Generate' w zakładce Dashboard, aby zobaczyć wykresy.")
     with col_r:
         st.header("wykres 2.")
