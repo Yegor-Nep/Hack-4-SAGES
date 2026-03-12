@@ -7,12 +7,12 @@ from params_enum import Parametrs
 import cpp_heat_engine
 
 class Facade:
-    data = {}
     def __init__(self):
         self.data = {} 
         self.planet = cpp_heat_engine.Planet()
         self.star = cpp_heat_engine.Star()
         self.engine = cpp_heat_engine.ClimateEngine(180)
+        self.output = {}
 
     def run_simulation(self):
         self.planet.set_mass(self.data[Parametrs.mass])
@@ -27,17 +27,16 @@ class Facade:
 
         simulation = self.engine.run_simulation(self.planet, self.star, 5000, 10000)
         
-        return_dict = {}
-        return_dict["theta_angles"] = simulation.theta_angles
-        return_dict["temperatures"] = simulation.temperatures
-        return_dict["water_phases"] = [phase.name for phase in simulation.water_phases]
-        return_dict["habitability"] = simulation.habitability
+        self.output["theta_angles"] = simulation.theta_angles
+        self.output["temperatures"] = simulation.temperatures
+        self.output["water_phases"] = [phase.name for phase in simulation.water_phases]
+        self.output["habitability"] = simulation.habitability
 
-        return return_dict
+        return self.output # for testing purposes
 
     # GETTERS SETTERS
-    def get_data(self):
-        return self.data
+    def get_output(self):
+        return self.output
 
     def set_data(self, data):
         self.data = data
