@@ -88,7 +88,7 @@ with tab_d:
 
         with sub_col2:
             with st.container(border=True):
-                results[Parametrs.heat_capacity] = slider_with_input("heat capacity", 1000000, 100000000, 50500000, "heat_capacity")
+                results[Parametrs.heat_capacity] = slider_with_input("heat capacity", 100000000, 1000000000, 505000000, "heat_capacity")
                 results[Parametrs.base_diffusion] = slider_with_input("base diffusion", 0.0, 100.0, 1.5, "base_diffusion")
                 results[Parametrs.base_pressure] = slider_with_input("base pressure", 0.01, 100.0, 50.0, "base_pressure")
                 results[Parametrs.stellar_flux] = slider_with_input("stellar flux", 100.0, 3000.0, 1550.0, "stellar_flux")
@@ -115,9 +115,9 @@ with tab_d:
                 st.session_state['global_map_fig'] = fig1
                 st.session_state['water_map_fig'] = fig2
                 st.session_state['generated_chart'] = True
-                st.success("Wykres wygenerowany!")
+                st.success("Chart generated")
             else:
-                st.error("Fasada nie zwróciła danych do wykresu!")
+                st.error("Facade is broken lol")
     
     with col_img:
         st.subheader("Planetary Simulation")
@@ -134,7 +134,7 @@ with tab_g:
         with col_center[1]:
             st.pyplot(st.session_state['current_fig']) 
     else:
-        st.info("Kliknij 'Generate' w zakładce Dashboard, aby zobaczyć wykresy.")
+        st.info("Click 'Generate' in Dashboard, to see charts.")
         
     st.write("---") 
     
